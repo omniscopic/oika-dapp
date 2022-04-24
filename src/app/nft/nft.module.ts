@@ -10,7 +10,6 @@ import { NFTListRoutingModule } from './nft-routing.module';
 import { NftComponent } from './nft/nft.component';
 import { NftPriceComponent } from './charts/nft-price/nft-price.component';
 
-
 @NgModule({
   declarations: [EcologicalStateChartComponent, NftComponent, NftPriceComponent],
   imports: [

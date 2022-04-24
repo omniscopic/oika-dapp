@@ -1,15 +1,14 @@
 import { createAction, props } from '@ngrx/store';
+import { Contract } from './nfts.interface';
 
-export const loadNftss = createAction(
-  '[Nfts] Load Nftss'
+export const loadContract = createAction('[Nfts] Load Contract', props<{ contractAddr: string }>());
+
+export const loadContractSuccess = createAction(
+  '[Nfts] Load Contract Success',
+  props<{ contract: Contract }>()
 );
 
-export const loadNftssSuccess = createAction(
-  '[Nfts] Load Nftss Success',
-  props<{ data: any }>()
-);
-
-export const loadNftssFailure = createAction(
-  '[Nfts] Load Nftss Failure',
+export const loadContractFailure = createAction(
+  '[Nfts] Load Contract Failure',
   props<{ error: any }>()
 );
