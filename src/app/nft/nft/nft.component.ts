@@ -1,5 +1,12 @@
+import { reducers } from './../../reducers/index';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import * as NFTSActions from '../nfts.actions';
+import { Contract } from '../nfts.interface';
+import * as fromNFTs from '../nfts.selectors';
+import * as fromSettings from '../../reducers/settings/settings.selectors';
 
 export interface DistributionItem {
   artist: string;
@@ -23,7 +30,10 @@ export class NftComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['artist', 'habitat', 'oika', 'startprice'];
   dataSource = DISTRIBUTION_DATA;
 
-  constructor(public route: ActivatedRoute) { }
+  contract$: Observable<Contract | null> | undefined;
+
+  constructor(public route: ActivatedRoute,
+    private store: Store) { }
 
   ngOnDestroy(): void {
     // avoid memory leaks here by unsubscribing
@@ -34,7 +44,13 @@ export class NftComponent implements OnInit, OnDestroy {
     const idSub = this.route.params.subscribe(params => {
       this.id = params['id'] as number;
     })
-    console.log(this.id);
+
+    // FIXME:
+    const CONTRACT_ADDR = '0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2b';
+
+    this.store.dispatch(NFTSActions.loadContract({ contractAddr: CONTRACT_ADDR }));
+    this.contract$ = this.store.pipe(select(fromNFTs.selectContract));
+
   }
 
 }

@@ -69,3 +69,6 @@
     Lindsey and Rich, giddy over the dance of a horsehair worm in the water
   </div>
 </div>
+<div *ngIf="contract$ | async as contract">
+  Contract description: {{contract.description}}
+</div>
