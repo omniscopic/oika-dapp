@@ -14,19 +14,19 @@ export interface RoyaltyInfoResponse {
 }
 
 export interface NFT {
+  // Contract fields
   id: number;
-  data: string;
-  name: string;
-  tokenId?: string;
-  description: string;
-  imageHash?: string;
-  metadataHash: string;
-  animationURL: string;
-  attributes?: Attribute[];
-  image?: string;
-  external_url?: string;
-  owner: string;
-  isFrozen: boolean;
+  owner: string; // access.owner
+  metadataHash: string; // info.token_uri
+
+  // Metadata fields
+  name?: string; // name
+  description?: string; // description
+  image?: string; // image
+  imageHash?: string; // image
+  animationURL?: string; // animationURL
+  attributes?: Attribute[]; // attributes [trait_type, value]
+  external_url?: string; // external_url
 }
 
 export interface Attribute {

@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Contract } from './nfts.interface';
+import { Contract, NFT } from './nfts.interface';
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 
 export const loadCosmWasm = createAction('[Nfts] Load CosmWasm');
@@ -30,7 +30,7 @@ export const loadToken = createAction('[Nfts] Load Token', props<{ cosmWasmClien
 
 export const loadTokenSuccess = createAction(
   '[Nfts] Load Token Success',
-  props<{ token: string }>()
+  props<{ token: NFT }>()
 );
 
 export const loadTokenFailure = createAction(

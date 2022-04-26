@@ -80,8 +80,9 @@
 </div>
 
 <div *ngIf="token$ | async as token">
-  Token {{token}}
-
+  Token {{token.id}}
+  Owner {{token.owner}}
+  metadataHash {{token.metadataHash}}
 </div>
 
 

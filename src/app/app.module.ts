@@ -51,6 +51,8 @@ import { SettingsEffects } from './reducers/settings/settings.effects';
 
 import { NftsEffects } from './nft/nfts.effects';
 import { nftsReducers } from './nft/nfts.reducer';
+import { walletReducers } from './nft/wallet.selectors';
+import { WalletEffects } from './nft/wallet.effects';
 
 
 export {
@@ -91,7 +93,8 @@ export function httpLoaderFactory(http: HttpClient) {
     StoreModule.forRoot(reducers, { metaReducers }),
     StoreRouterConnectingModule.forRoot(),
     StoreModule.forFeature('nfts', nftsReducers),
-    EffectsModule.forRoot([SettingsEffects, AppEffects, NftsEffects]),
+    StoreModule.forFeature('wallet', walletReducers),
+    EffectsModule.forRoot([SettingsEffects, AppEffects, NftsEffects, WalletEffects]),
     environment.production
     ? []
     : StoreDevtoolsModule.instrument({

@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import * as NFTSActions from '../nfts.actions';
-import { Contract } from '../nfts.interface';
+import { Contract, NFT } from '../nfts.interface';
 import * as fromNFTs from '../nfts.selectors';
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 
@@ -31,7 +31,7 @@ export class NftComponent implements OnInit, OnDestroy {
 
   contract$: Observable<Contract | null> | undefined;
   cosmWasmClient$: Observable<CosmWasmClient | null> | undefined;
-  token$: Observable<string> | undefined;
+  token$: Observable<NFT | null> | undefined;
 
   constructor(public route: ActivatedRoute,
     private store: Store) { }
