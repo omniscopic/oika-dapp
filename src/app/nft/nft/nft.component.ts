@@ -1,4 +1,3 @@
-import { reducers } from './../../reducers/index';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
@@ -6,7 +5,7 @@ import { Observable } from 'rxjs';
 import * as NFTSActions from '../nfts.actions';
 import { Contract } from '../nfts.interface';
 import * as fromNFTs from '../nfts.selectors';
-import * as fromSettings from '../../reducers/settings/settings.selectors';
+import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 
 export interface DistributionItem {
   artist: string;
@@ -31,6 +30,8 @@ export class NftComponent implements OnInit, OnDestroy {
   dataSource = DISTRIBUTION_DATA;
 
   contract$: Observable<Contract | null> | undefined;
+  cosmWasmClient$: Observable<CosmWasmClient | null> | undefined;
+  token$: Observable<string> | undefined;
 
   constructor(public route: ActivatedRoute,
     private store: Store) { }
@@ -46,10 +47,19 @@ export class NftComponent implements OnInit, OnDestroy {
     })
 
     // FIXME:
-    const CONTRACT_ADDR = '0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2b';
+    const CONTRACT_ADDR = 'stars1yw4xvtc43me9scqfr2jr2gzvcxd3a9y4eq7gaukreugw2yd2f8tssqyvcm';
 
-    this.store.dispatch(NFTSActions.loadContract({ contractAddr: CONTRACT_ADDR }));
-    this.contract$ = this.store.pipe(select(fromNFTs.selectContract));
+    this.store.dispatch(NFTSActions.loadCosmWasm());
+    this.cosmWasmClient$ = this.store.pipe(select(fromNFTs.selectCosmWasmClient));
+    this.cosmWasmClient$.subscribe(cosmWasmClient => {
+      if (cosmWasmClient) {
+        this.store.dispatch(NFTSActions.loadContract({ cosmWasmClient, contractAddr: CONTRACT_ADDR }));
+        this.contract$ = this.store.pipe(select(fromNFTs.selectContract));
+
+        this.store.dispatch(NFTSActions.loadToken({ cosmWasmClient, contractAddr: CONTRACT_ADDR, tokenId: this.id }));
+        this.token$ = this.store.pipe(select(fromNFTs.selectToken));
+      }
+    });
 
   }
 

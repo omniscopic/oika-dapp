@@ -14,4 +14,13 @@ export const selectContract = createSelector(
   (state: NFTsState) => state.contract
 );
 
+export const selectCosmWasmClient = createSelector(
+  selectNFTs,
+  (state: NFTsState) => state.cosmWasmClient
+);
+
+export const selectToken = createSelector(
+  selectNFTs,
+  (state: NFTsState) => state.token
+);
 

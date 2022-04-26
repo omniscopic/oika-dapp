@@ -1,5 +1,6 @@
-import { Action, combineReducers, createReducer, on } from '@ngrx/store';
+import { Action, createReducer, on } from '@ngrx/store';
 import { Contract } from './nfts.interface';
+import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import * as NFTSActions from './nfts.actions';
 import * as fromRoot from '../reducers';
 
@@ -11,17 +12,23 @@ export interface State extends fromRoot.AppState {
 }
 
 export interface NFTsState {
+  cosmWasmClient: CosmWasmClient | null;
   contract: Contract | null;
+  token: string;
 }
 
 export const initialState: NFTsState = {
-  contract: null
+  cosmWasmClient: null,
+  contract: null,
+  token: ''
 };
 
 export const reducer = createReducer(
   initialState,
   on(
+    NFTSActions.loadCosmWasmSuccess,
     NFTSActions.loadContractSuccess,
+    NFTSActions.loadTokenSuccess,
     (state, action) =>
      ({ ...state, ...action })
   ),

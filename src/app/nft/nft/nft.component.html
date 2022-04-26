@@ -70,5 +70,18 @@
   </div>
 </div>
 <div *ngIf="contract$ | async as contract">
-  Contract description: {{contract.description}}
+  Contract
+  creator: {{contract.creator}}
+  address: {{contract.address}}
+  codeId: {{contract.codeId}}
+  admin: {{contract.admin}}
+  label: {{contract.label}}
+  ibcPortId: {{contract.ibcPortId}}
 </div>
+
+<div *ngIf="token$ | async as token">
+  Token {{token}}
+
+</div>
+
+

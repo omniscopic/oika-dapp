@@ -91,10 +91,12 @@ export function httpLoaderFactory(http: HttpClient) {
     StoreModule.forRoot(reducers, { metaReducers }),
     StoreRouterConnectingModule.forRoot(),
     StoreModule.forFeature('nfts', nftsReducers),
-    !environment.production ? StoreDevtoolsModule.instrument() : [{
-      name: 'NFTs'
-    }],
     EffectsModule.forRoot([SettingsEffects, AppEffects, NftsEffects]),
+    environment.production
+    ? []
+    : StoreDevtoolsModule.instrument({
+        name: 'NFTs'
+      }),
 
     // 3rd party
     TranslateModule.forRoot({

@@ -1,31 +1,54 @@
 import { Injectable } from '@angular/core';
 import {
   Contract,
-  RoyaltyInfoResponse,
-  NFT,
-  Attribute,
 } from '../nfts.interface';
-import { Observable, map } from 'rxjs';
+import { Observable, map, from } from 'rxjs';
+import { Contract as CosmWasmContract, CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
+const RPC_ENDPOINT = 'https://rpc.double-double-1.stargaze-apis.com';
+const CONTRACT_ADDRESS = 'stars1yw4xvtc43me9scqfr2jr2gzvcxd3a9y4eq7gaukreugw2yd2f8tssqyvcm';
 
 // create a new contract
-export const createContract = (): Contract => ({
-  id: 1,
-  creator: 'stars1...',
-  description: 'oika',
-  image: 'imagerul',
-  externalLink: 'http://oika.com',
+export const createContract = (cosmWasmContract: CosmWasmContract): Contract => ({
+  creator: cosmWasmContract.creator,
+  address: cosmWasmContract.address,
+  codeId: cosmWasmContract.codeId,
+  admin: cosmWasmContract.admin,
+  label: cosmWasmContract.label,
+  ibcPortId: cosmWasmContract.ibcPortId,
 });
 
 @Injectable({
   providedIn: 'root',
 })
 export class NftService {
-  constructor() {}
 
-  getContract(contractAddress: string): Observable<Contract> {
-    return new Observable((observer) => {
-      observer.next(createContract());
-      observer.complete();
-    });
+  constructor() {
   }
+
+  getCosmWasmClient(): Observable<CosmWasmClient> {
+    console.log('getCosmWasmClient');
+    return from(CosmWasmClient.connect(RPC_ENDPOINT));
+  }
+
+  getContract(cosmWasmClient: CosmWasmClient, contractAddress: string): Observable<Contract> {
+    console.log('getContract', cosmWasmClient, contractAddress);
+    return from(cosmWasmClient.getContract(contractAddress)).pipe(
+      map(cosmWasmContract =>
+        createContract(cosmWasmContract)
+      )
+    )
+  }
+
+  getToken(cosmWasmClient: CosmWasmClient, contractAddress: string, tokenId: number): Observable<string> {
+    console.log('getToken', cosmWasmClient, contractAddress, tokenId);
+    return from(cosmWasmClient.queryContractSmart(contractAddress, {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      all_nft_info: { 'token_id': `${tokenId.toString()}` },
+      })).pipe(
+        map(tokenInfo =>
+          JSON.stringify(tokenInfo)
+      )
+    )
+  }
+
 }

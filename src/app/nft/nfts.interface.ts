@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 export interface Contract {
-  id: number;
-  creator: string;
-  description: string;
-  image: string;
-  externalLink: string;
-  royaltyInfo?: RoyaltyInfoResponse
+  creator: string,
+  address: string,
+  codeId: number;
+  admin: string | undefined;
+  label: string;
+  ibcPortId: string | undefined;
 }
 
 export interface RoyaltyInfoResponse {
