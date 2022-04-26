@@ -5,7 +5,6 @@ import {
 import { Observable, map, from } from 'rxjs';
 import { Contract as CosmWasmContract, CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 const RPC_ENDPOINT = 'https://rpc.double-double-1.stargaze-apis.com';
-const CONTRACT_ADDRESS = 'stars1yw4xvtc43me9scqfr2jr2gzvcxd3a9y4eq7gaukreugw2yd2f8tssqyvcm';
 
 // create a token
 export const createToken = (tokenId: number, tokenInfo: any): NFT => {

@@ -20,6 +20,17 @@ export class EcologicalStateChartComponent {
         pointHoverBorderColor: 'rgba(150,95,56,0.8)',
         fill: 'origin',
       },
+      {
+        data: [ 40, 42, 48, 46, 62, 60, 59 ],
+        label: 'Biodiversity Index',
+        backgroundColor: 'rgba(27,61,20,0.2)',
+        borderColor: 'rgba(27,61,20,1)',
+        pointBackgroundColor: 'rgba(27,61,20,1)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(27,61,20,0.8)',
+        fill: 'origin',
+      },
     ],
     labels: [ 'October', 'November', 'December', 'January', 'February', 'March', 'April' ]
   };

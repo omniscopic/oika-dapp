@@ -1,12 +1,13 @@
 <div class="row">
   <div class="col-md-6 col-lg-6 mb-3">
-    <h1>NFT #1: The Life Cycle of a Mushroom</h1>
+    <h1>NFT #1: The Life Cycle of a Mushroom <a mat-button href="https://testnet.publicawesome.dev/media/stars1u8z2n5u7whwf4656yxfyh8ssjxy2tuhavds8ddrmdfvvwu84cvuqvvqhtp/1"><mat-icon *ngIf="contract$ | async as contract" matTooltip="{{contract.address}}">star</mat-icon></a></h1>
     <video class="col-12" controls="" loop="">
       <source src="assets/oikanft1.mp4" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
     <h2>by Rita Leduc</h2>
     <h2>
+      41" x 37" Oil on Canvas<br/>
       Ecology Extended: Hubbard Brook Experimental Forest White Mountains, NH
     </h2>
     <h3>
@@ -15,74 +16,36 @@
     </h3>
     <h3>NFT Asset Types Available: Video, Painting</h3>
     <mat-divider></mat-divider>
-    <div><br/><br/></div>
-    <app-nft-price></app-nft-price>
-    <div><br/><br/></div>
+    <div><br/></div>
     <div>
       <h3>Wallet distributions</h3>
-      <table style="width:100%" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-        <!-- Artist Column -->
-        <ng-container matColumnDef="artist">
-          <th mat-header-cell *matHeaderCellDef> Artist </th>
-          <td mat-cell *matCellDef="let item"> {{item.artist}} </td>
-        </ng-container>
-
-        <!-- Habitat Column -->
-        <ng-container matColumnDef="habitat">
-          <th mat-header-cell *matHeaderCellDef> Habitat </th>
-          <td mat-cell *matCellDef="let item"> {{item.habitat}} </td>
-        </ng-container>
-
-        <!-- Oika Column -->
-        <ng-container matColumnDef="oika">
-          <th mat-header-cell *matHeaderCellDef> Oika </th>
-          <td mat-cell *matCellDef="let item"> {{item.oika}} </td>
-        </ng-container>
-
-        <!-- Start Price Column -->
-        <ng-container matColumnDef="startprice">
-          <th mat-header-cell *matHeaderCellDef> Start Price </th>
-          <td mat-cell *matCellDef="let item"> {{item.startprice}} </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
+      <app-income-dist></app-income-dist>
     </div>
+    <div><br/></div>
+    <div *ngIf="token$ | async as token">
+      Token Owner: {{token.owner}}
+    </div>
+    <div><br/></div>
+    <app-nft-price></app-nft-price>
   </div>
   <div class="col-md-6 col-lg-6 mb-3">
     <div class="row justify-content-end">
-      <div class="col-3">
-        <button mat-raised-button color="accent">Add Soil Data</button>
+      <div class="col-3 d-flex justify-content-end">
+        <button mat-raised-button color="primary">Add Soil Data</button>
       </div>
     </div>
     <app-ecological-state-chart></app-ecological-state-chart>
     <br /><br />
     <div class="row justify-content-end">
-      <div class="col-3">
-        <button mat-raised-button color="accent">Add Image</button>
+      <div class="col-3 d-flex justify-content-end">
+        <button mat-raised-button color="primary">Add Image</button>
       </div>
-      <br /><br /><br />
     </div>
+    <div><br /></div>
     <img class="col-12" src="assets/IMG_1329.jpg" alt="" />
     Lindsey and Rich, giddy over the dance of a horsehair worm in the water
   </div>
 </div>
-<div *ngIf="contract$ | async as contract">
-  Contract
-  creator: {{contract.creator}}
-  address: {{contract.address}}
-  codeId: {{contract.codeId}}
-  admin: {{contract.admin}}
-  label: {{contract.label}}
-  ibcPortId: {{contract.ibcPortId}}
-</div>
 
-<div *ngIf="token$ | async as token">
-  Token {{token.id}}
-  Owner {{token.owner}}
-  metadataHash {{token.metadataHash}}
-</div>
 
 

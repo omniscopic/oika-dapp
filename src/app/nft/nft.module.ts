@@ -9,9 +9,10 @@ import { NftsEffects } from './nfts.effects';
 import { NFTListRoutingModule } from './nft-routing.module';
 import { NftComponent } from './nft/nft.component';
 import { NftPriceComponent } from './charts/nft-price/nft-price.component';
+import { IncomeDistComponent } from './charts/income-dist/income-dist.component';
 
 @NgModule({
-  declarations: [EcologicalStateChartComponent, NftComponent, NftPriceComponent],
+  declarations: [EcologicalStateChartComponent, NftComponent, NftPriceComponent, IncomeDistComponent],
   imports: [
     CommonModule,
     NgChartsModule,

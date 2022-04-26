@@ -46,8 +46,7 @@ export class NftComponent implements OnInit, OnDestroy {
       this.id = params['id'] as number;
     })
 
-    // FIXME:
-    const CONTRACT_ADDR = 'stars1yw4xvtc43me9scqfr2jr2gzvcxd3a9y4eq7gaukreugw2yd2f8tssqyvcm';
+    const CONTRACT_ADDR = 'stars1u8z2n5u7whwf4656yxfyh8ssjxy2tuhavds8ddrmdfvvwu84cvuqvvqhtp';
 
     this.store.dispatch(NFTSActions.loadCosmWasm());
     this.cosmWasmClient$ = this.store.pipe(select(fromNFTs.selectCosmWasmClient));
