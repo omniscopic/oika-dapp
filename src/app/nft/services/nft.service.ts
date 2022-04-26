@@ -11,10 +11,10 @@ const CONTRACT_ADDRESS = 'stars1yw4xvtc43me9scqfr2jr2gzvcxd3a9y4eq7gaukreugw2yd2
 export const createToken = (tokenId: number, tokenInfo: any): NFT => {
   console.log(tokenInfo);
   return ({
-  id: tokenId,
-  owner: tokenInfo['access']['owner'],
-  metadataHash: tokenInfo['info']['token_uri'],
-})
+    id: tokenId,
+    owner: tokenInfo['access']['owner'],
+    metadataHash: tokenInfo['info']['token_uri'],
+  })
 };
 
 // create a new contract
@@ -54,9 +54,9 @@ export class NftService {
     return from(cosmWasmClient.queryContractSmart(contractAddress, {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       all_nft_info: { 'token_id': `${tokenId.toString()}` },
-      })).pipe(
-        map(tokenInfo =>
-          createToken(tokenId, tokenInfo)
+    })).pipe(
+      map(tokenInfo =>
+        createToken(tokenId, tokenInfo)
       )
     )
   }

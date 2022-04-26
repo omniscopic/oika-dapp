@@ -11,16 +11,6 @@ import * as WalletActions from './wallet.actions';
 @Injectable()
 export class WalletEffects {
 
-  logout$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(WalletActions.logoutUser),
-      tap(_ => {
-        this.walletService.clearProvider();
-      })
-    ),
-    { dispatch: false }
-  );
-
   constructor(private actions$: Actions,
     private store: Store,
     private walletService: WalletService,

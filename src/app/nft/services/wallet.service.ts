@@ -3,83 +3,41 @@ import { Store } from '@ngrx/store';
 import { setAccountAddress, setNetworkName } from '../wallet.actions';
 
 import { NotificationService } from '../../services/notifications/notification.service';
+import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate';
+
+const CHAIN_ID = 'regen-1';
+const RPC_ENDPOINT = 'http://public-rpc.regen.vitwit.com:26657';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WalletService {
   private wallet: any;
-  // FIXME: setup Provider and Web3Modal
-  // private provider: ethers.providers.Web3Provider;
-  // private web3Modal: Web3Modal;
 
   constructor(private store: Store,
     private notificationService: NotificationService) {
-    this.setupWeb3Modal();
   }
 
   public async connectWallet() {
-    try {
-      // FIXME: connect to wallet
-      // this.wallet = await this.web3Modal.connect();
-      // this.provider = new ethers.providers.Web3Provider(this.wallet, 'any');
-
-      await this.updateChain();
-      await this.updateAccount();
-
-      this.setupListeners();
+    if (!(window as any).keplr) {
+      throw new Error('Keplr is not supported or installed on this browser!');
     }
-    catch (e) {
-      console.log(e);
-    }
-  }
 
-  public clearProvider() {
-    // this.web3Modal.clearCachedProvider();
-  }
+    await (window as any).keplr.enable(CHAIN_ID);
 
-  private setupWeb3Modal(): void {
-    const providerOptions = {};
+    const offlineSigner = (window as any).keplr.getOfflineSigner(CHAIN_ID);
 
-    // this.web3Modal = new Web3Modal({
-    //   network: 'mainnet',
-    //   cacheProvider: true,
-    //   providerOptions,
-    // });
-  }
+    const accounts = await offlineSigner.getAccounts();
+    this.store.dispatch(setAccountAddress({ accountAddress: accounts[0].address }));
 
-  private setupListeners() {
-    console.log('Setting up listeners');
-    // this.wallet.on('accountsChanged', async (accounts: string[]) => {
-    //   console.log('Accounts changed');
-    //   await this.updateAccount();
-    // });
-    // this.wallet.on('chainChanged', async (chainId: number) => {
-    //   console.log('Chain changed');
-    //   await this.updateChain();
-    // });
-  }
-
-  private async updateChain() {
-    const [chainIdStr, networkName] = ['1', 'mainnet'];
-
-    // FIXME: get network from the provider
-    // const [chainIdStr, networkName] =await this.provider.getNetwork().then(network =>
-    //   [network.chainId.toString(), network.name] as const
+    // FIXME: Generates CORS error
+    // const cosmJS = SigningCosmWasmClient.connectWithSigner(
+    //     RPC_ENDPOINT,
+    //     accounts[0].address,
+    //     offlineSigner,
     // );
 
-    this.store.dispatch(setNetworkName({ networkName }));
+    // this.store.dispatch(setNetworkName({ networkName }));
+
   }
-
-  private async updateAccount() {
-    // FIXME: get account from the provider
-    // this.provider.listAccounts().then((res: any[]) => {
-    //   const address = res[0];
-    //   this.store.dispatch(setAccountAddress({ accountAddress: address }));
-    // });
-
-    // FIXME: Remove this
-    this.store.dispatch(setAccountAddress({ accountAddress: '$regen' }));
-  }
-
 }
